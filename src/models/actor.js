@@ -12,6 +12,24 @@ export class Actor extends Phaser.Physics.Arcade.Sprite {
         return this.body;
     }
 
+    getDamage(value) {
+        this.scene.tweens.add({
+            targets: this,
+            duration: 100,
+            repeat: 3,
+            yoyo: true,
+            alpha: 0.5,
+            onStart: () => {
+                if (value) {
+                    this.hp = this.hp - value;
+                }
+            },
+            onComplete: () => {
+                this.setAlpha(1);
+            },
+        });
+    }
+
     checkFlip() {
         if(this.body.velocity.x < 0) {
             this.scaleX = -1;

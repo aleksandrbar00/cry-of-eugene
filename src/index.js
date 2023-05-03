@@ -49,12 +49,28 @@ class MyGame extends Phaser.Scene
 }
 
 const config = {
-    type: Phaser.AUTO,
+    type: Phaser.WEBGL,
+    backgroundColor: '#351f1b',
+    scale: {
+        mode: Phaser.Scale.ScaleModes.NONE,
+        width: window.innerWidth,
+        height: window.innerHeight,
+    },
     parent: 'cry-of-eugene',
-    width: 800,
-    height: 800,
     physics: {
         default: 'arcade',
+        arcade: {
+            debug: true
+        }
+    },
+    render: {
+        antialiasGL: false,
+        pixelArt: true,
+    },
+    canvasStyle: `display: block; width: 100%; height: 100%;`,
+    autoFocus: true,
+    audio: {
+        disableWebAudio: false,
     },
     scene: [MyGame, LoadingStartLevel, StartLevel]
 };

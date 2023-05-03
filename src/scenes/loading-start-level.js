@@ -2,6 +2,7 @@ import playerIdleSheet from "../assets/character/base/Idle.png";
 import playerWalkSheet from "../assets/character/base/Walk.png";
 import playerRunSheet from "../assets/character/base/Run.png";
 import playerBaseAttackSheet from "../assets/character/base/Attack_1.png";
+import dungeonTile from "../assets/tiles/dungeon.png";
 
 export class LoadingStartLevel extends Phaser.Scene {
 
@@ -10,6 +11,11 @@ export class LoadingStartLevel extends Phaser.Scene {
     }
 
     preload () {
+        this.load.image({
+            key: 'tiles',
+            url: dungeonTile,
+        });
+        this.load.tilemapTiledJSON("dungeon", "../src/assets/tiles/json/dungeon.tmj");
         this.load.spritesheet("player", playerIdleSheet, {
             frameWidth: 96,
             frameHeight: 96

@@ -16,11 +16,13 @@ export class Player extends Actor {
 
     update() {
         if (this.keyA.isDown && !this.keyJ.isDown) {
-            this.getBody().velocity.x = -30;
+            this.getBody().velocity.x = -60;
+            this.getBody().offset.set(96, 0);
             this.checkFlip();
             this.anims.play("walk", true);
         }else if (this.keyD.isDown && !this.keyJ.isDown) {
-            this.getBody().velocity.x = 30;
+            this.getBody().velocity.x = 60;
+            this.getBody().offset.set(0, 0);
             this.checkFlip();
             this.anims.play("walk", true);
         }else if (this.keyJ.isDown) {
