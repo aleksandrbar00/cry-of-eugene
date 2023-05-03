@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
-import logoImg from './assets/logo.png';
+import logoImg from './assets/logo.jpg';
+import {StartLevel} from "./scenes/start-level";
+import {LoadingStartLevel} from "./scenes/loading-start-level";
 
 class MyGame extends Phaser.Scene
 {
@@ -12,28 +14,49 @@ class MyGame extends Phaser.Scene
     {
         this.load.image('logo', logoImg);
     }
-      
+
     create ()
     {
-        const logo = this.add.image(400, 150, 'logo');
-      
+        const logo = this.add.image(400, 150, 'logo').setScale(0.1, 0.1);
+
+        this.text = this.add.text(320, 200, "Cry Of Eugene", {
+            fontSize: 24,
+            align: "center"
+        });
+
         this.tweens.add({
             targets: logo,
             y: 450,
-            duration: 2000,
+            duration: 4000,
             ease: "Power2",
             yoyo: true,
             loop: -1
-        });
+        })
+
+        this.tweens.add({
+            targets: this.text,
+            y: 600,
+            duration: 4000,
+            ease: "Power2",
+            yoyo: true,
+            loop: -1
+        })
+
+        setTimeout(() => {
+            this.scene.start("loading-start-level");
+        }, 3000)
     }
 }
 
 const config = {
     type: Phaser.AUTO,
-    parent: 'phaser-example',
+    parent: 'cry-of-eugene',
     width: 800,
-    height: 600,
-    scene: MyGame
+    height: 800,
+    physics: {
+        default: 'arcade',
+    },
+    scene: [MyGame, LoadingStartLevel, StartLevel]
 };
 
-const game = new Phaser.Game(config);
+new Phaser.Game(config);
