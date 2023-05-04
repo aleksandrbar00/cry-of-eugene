@@ -15,6 +15,10 @@ export class LoadingStartLevel extends Phaser.Scene {
             key: 'tiles',
             url: dungeonTile,
         });
+        this.load.spritesheet('tiles_spr', dungeonTile, {
+            frameWidth: 16,
+            frameHeight: 16,
+        });
         this.load.tilemapTiledJSON("dungeon", "../src/assets/tiles/json/dungeon.tmj");
         this.load.spritesheet("player", playerIdleSheet, {
             frameWidth: 96,

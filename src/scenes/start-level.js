@@ -9,7 +9,21 @@ export class StartLevel extends Phaser.Scene {
     create() {
         this.initMap();
         this.player = new Player(this, 400, 400);
+        this.initChests();
         this.physics.add.collider(this.player, this.wallsLayer);
+        this.cameras.main.startFollow(this.player);
+        this.cameras.main.zoomTo(2);
+    }
+
+    createChestsAnimations() {
+        this.anims.create({
+            key: "chest-open",
+            frames: this.anims.generateFrameNames("tiles_spr", {
+                start: 595,
+                end: 597
+            }),
+            frameRate: 12,
+        })
     }
 
     update(time, delta) {
@@ -27,6 +41,23 @@ export class StartLevel extends Phaser.Scene {
 
         this.physics.world.setBounds(0, 0, this.wallsLayer.width, this.wallsLayer.height);
         this.showDebugWalls();
+    }
+
+    initChests() {
+        const chestPoints = this.map.filterObjects('Chests', obj => obj.name === 'ChestPoint');
+
+        this.chests = chestPoints.map(chestPoint =>
+            this.physics.add.sprite(chestPoint.x, chestPoint.y, 'tiles_spr', 595).setScale(1.5),
+        );
+
+        this.createChestsAnimations();
+
+        this.chests.forEach(chest => {
+            this.physics.add.overlap(this.player, chest, (obj1, obj2) => {
+                obj2.destroy();
+            });
+        });
+
     }
 
     showDebugWalls() {
